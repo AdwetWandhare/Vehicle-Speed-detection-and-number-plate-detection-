@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Input Method</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #121212; 
+            color: #e0e0e0; 
+        }
+        h1 {
+            color: #bb86fc; 
+        }
+        .container {
+            background-color: #1f1f1f; 
+            padding: 30px;
+            border-radius: 8px;
+        }
+        .form-control {
+            background-color: #333333; 
+            color: #e0e0e0; 
+            border: 1px solid #555555; 
+        }
+        .btn-primary {
+            background-color: #6200ea; 
+            border-color: #6200ea; 
+        }
+        .btn-primary:hover {
+            background-color: #3700b3; 
+            border-color: #3700b3;
+        }
+
+      
+        .custom-file-btn {
+            display: inline-block;
+            background-color: #333333;
+            color: #e0e0e0; 
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-weight: 500;
+            text-align: center;
+            width: auto;
+            transition: background-color 0.3s ease;
+            border: 1px solid #555555; 
+        }
+
+        .custom-file-btn:hover {
+            background-color: #555555; 
+        }
+
+        .file-name {
+            display: inline-block;
+            margin-left: 10px;
+            font-style: italic;
+            color: #e0e0e0; 
+            padding-top: 5px;
+        }
+
+        .custom-file-input {
+            opacity: 0;
+            position: absolute;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Select Input Method</h1>
+        <form action="/start_detection" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="input_method">Choose Input Method:</label>
+                <select class="form-control" id="input_method" name="input_method" required>
+                    <option value="Camera">Camera</option>
+                    <option value="Video">Video</option>
+                </select>
+            </div>
+            <div class="form-group" id="video_file_input" style="display:none;">
+                <label for="video_file">Select Video File:</label>
+                <div>
+                 
+                    <label for="video_file" class="custom-file-btn">Choose File</label>
+                    <input type="file" class="custom-file-input" id="video_file" name="video_file" accept="video/*">
+                    
+                
+                    <span class="file-name" id="file-name">No file chosen</span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Start Detection</button>
+        </form>
+    </div>
+
+    <script>
+        const inputMethod = document.getElementById('input_method');
+        const videoFileInput = document.getElementById('video_file_input');
+        const videoFile = document.getElementById('video_file');
+        const fileNameDisplay = document.getElementById('file-name');
+
+        inputMethod.addEventListener('change', function () {
+            if (this.value === 'Video') {
+                videoFileInput.style.display = 'block';
+            } else {
+                videoFileInput.style.display = 'none';
+            }
+        });
+
+   
+        videoFile.addEventListener('change', function () {
+            fileNameDisplay.textContent = videoFile.files[0] ? videoFile.files[0].name : 'No file chosen';
+        });
+    </script>
+</body>
+</html>
